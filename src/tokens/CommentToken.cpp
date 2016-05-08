@@ -3,5 +3,6 @@
 
 void CommentToken::print()
 {
-	std::cout << "<!-- " + value + " -->";
+	std::cout << "[CommentToken            ] " << "<!-- " + value + " -->" << "\n";
 }
+

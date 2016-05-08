@@ -3,5 +3,5 @@
 
 void PlainTextToken::print()
 {
-	std::cout << this->value;
+	std::cout << "[PlainTextToken          ] " << this->value << "\n";
 }

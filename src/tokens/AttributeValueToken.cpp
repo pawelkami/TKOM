@@ -19,5 +19,5 @@ void AttributeValueToken::setQuoteType(char quote)
 
 void AttributeValueToken::print()
 {
-	std::cout << quoteType << value << quoteType << " ";
+	std::cout << "[AttributeValueToken     ] " << quoteType << value << quoteType << "\n";
 }

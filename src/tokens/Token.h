@@ -4,6 +4,21 @@
 #include <string>
 #include "TextPosition.h"
 
+enum TokenType 
+{
+	AttributeKey,
+	AttributeValue,
+	ClosingTag,
+	Comment,
+	Doctype,
+	EmptyClosingTag,
+	Equals,
+	PlainText,
+	TagClosingMark,
+	TagOpener,
+	None
+};
+
 class Token
 {
 protected:
@@ -11,10 +26,13 @@ protected:
 	TextPosition textPos;
 
 public:
+	const TokenType type = None;
+
 	Token();
 	Token(std::string value);
 	Token(std::string value, TextPosition pos);
 	Token(std::string value, int ln, int cn);
+	Token(std::string value, int ln, int cn, int global);
 	virtual ~Token() {}
 
 	virtual void print() = 0;
@@ -28,8 +46,7 @@ public:
 	TextPosition getTextPosition();
 	int getLineNumber();
 	int getCharNumber();
-
-
 };
+
 
 #endif

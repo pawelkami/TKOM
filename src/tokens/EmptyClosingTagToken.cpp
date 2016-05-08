@@ -3,5 +3,5 @@
 
 void EmptyClosingTagToken::print()
 {
-	std::cout << "/>";
+	std::cout << "[EmptyClosingTagToken    ] " <<  "/>" << "\n";
 }

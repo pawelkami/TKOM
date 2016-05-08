@@ -60,6 +60,12 @@
     <ClCompile Include="src\TextPosition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Lexer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tags.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\tokens\AttributeKeyToken.h">
@@ -96,6 +102,12 @@
       <Filter>Header Files\Tokens</Filter>
     </ClInclude>
     <ClInclude Include="src\TextPosition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Lexer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tags.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

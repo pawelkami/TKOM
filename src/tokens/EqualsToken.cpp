@@ -4,5 +4,5 @@
 
 void EqualsToken::print()
 {
-	std::cout << "=";
+	std::cout << "[EqualsToken             ] " << "="<< "\n";
 }

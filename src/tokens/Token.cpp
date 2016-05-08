@@ -20,6 +20,7 @@ void Token::setTextPos(int ln, int cn)
 	textPos = TextPosition(ln, cn);
 }
 
+
 TextPosition Token::getTextPosition()
 {
 	return textPos;
@@ -54,4 +55,12 @@ Token::Token(std::string value, int ln, int cn)
 {
 	this->value = value;
 	this->textPos = TextPosition(ln, cn);
+}
+
+Token::Token(std::string value, int ln, int cn, int global)
+{
+	this->value = value;
+	this->textPos.setLineNumber(ln);
+	this->textPos.setCharNumber(cn);
+	this->textPos.setGlobalNumber(global);
 }

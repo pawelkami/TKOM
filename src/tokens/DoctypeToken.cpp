@@ -3,5 +3,7 @@
 
 void DoctypeToken::print()
 {
-	std::cout << "<!doctype " << this->value << ">";
+	std::cout << "[DoctypeToken            ] " << "<!doctype " << this->value << ">" << "\n";
 }
+
+

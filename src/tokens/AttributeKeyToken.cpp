@@ -3,5 +3,5 @@
 
 void AttributeKeyToken::print()
 {
-	std::cout << this->value;
+	std::cout << "[AttributeKeyToken       ] " << this->value << "\n";
 }
