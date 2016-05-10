@@ -252,7 +252,7 @@ void Lexer::checkTag(const std::string & tag)
 {
 	if (!Tags::getInstance().checkIfTagExists(tag))
 	{
-		throw std::runtime_error("Tag " + tag + " does not exist" + printPosition() + "\n");
+		throw std::runtime_error("Tag " + tag + " does not exist " + printPosition() + "\n");
 	}
 
 }

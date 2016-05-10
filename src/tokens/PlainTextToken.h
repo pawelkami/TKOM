@@ -3,6 +3,7 @@
 
 #include "Token.h"
 
+// plain text bêd¹cy pomiêdzy tagami
 class PlainTextToken : public Token
 {
 public:

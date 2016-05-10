@@ -3,6 +3,7 @@
 
 #include "Token.h"
 
+// <!doctype
 class DoctypeToken : public Token
 {
 public:

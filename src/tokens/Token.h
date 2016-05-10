@@ -4,6 +4,7 @@
 #include <string>
 #include "TextPosition.h"
 
+// enum mówi¹cy jakiego typu jest dany tag
 enum TokenType 
 {
 	AttributeKey,

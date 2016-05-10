@@ -3,6 +3,7 @@
 
 #include "Token.h"
 
+// =
 class EqualsToken : public Token
 {
 public:

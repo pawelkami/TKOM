@@ -3,6 +3,7 @@
 
 #include "Token.h"
 
+// <!-- -->
 class CommentToken : public Token
 {
 public:
