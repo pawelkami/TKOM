@@ -1,8 +1,10 @@
 #include "Lexer.h"
+#include "exceptions/EOFexception.h"
 #include <algorithm>
 #include <string>
 #include <iterator>
 #include <locale>
+#include <iostream>
 
 void Lexer::popStack(const std::string& tag)
 {
@@ -23,7 +25,7 @@ char Lexer::nextChar()
 	if (textPos.getGlobalNumber() + 1 >= htmlString.size())
 	{
 		// koniec
-		return '\0';
+		throw EOFexception();
 	}
 	
 	if (htmlString[textPos.getGlobalNumber()] == '\n')
@@ -121,7 +123,7 @@ void Lexer::expectComment()
 	}
 
 	std::string insideComment = "";
-	// pêtla w której szukamy koñca( znak '>' mo¿e wyst¹piæ w komentarzu, wiêc nie mo¿emy uznaæ tego za koniec komentarza)
+	// pï¿½tla w ktï¿½rej szukamy koï¿½ca( znak '>' moï¿½e wystï¿½piï¿½ w komentarzu, wiï¿½c nie moï¿½emy uznaï¿½ tego za koniec komentarza)
 	while (true)
 	{
 		std::string word = getNextWord(">");
@@ -300,54 +302,62 @@ void Lexer::findAllTokens()
 
 	while (textPos.getGlobalNumber() < htmlString.size() - 1)
 	{
+
 		nextToken();
 	}
 }
 
 void Lexer::nextToken()
 {
-	skipWhitespaces();
-
-	std::string word = getNextWord("<");
-
-	if (!word.empty())
+	try
 	{
-		listToken.push_back(PToken(new PlainTextToken(word, textPos.getLineNumber(), textPos.getCharNumber(), textPos.getGlobalNumber())));
-	}
+		skipWhitespaces();
 
-	// jesteœmy na znaku <
-	nextChar();
+		std::string word = getNextWord("<");
 
-	if (getCurrentChar() == '!')
-	{
-		nextChar();
-		expectComment();
-	}
-	else if (getCurrentChar() == '/')	// </ 
-	{
-		nextChar();
-		expectCloseTag();
-	}
-	else
-	{
-		analyzeInnerTag();
-
-		if (getCurrentChar() == '>')
+		if (!word.empty())
 		{
-			listToken.push_back(PToken(new TagClosingMarkToken(">", textPos.getLineNumber(), textPos.getCharNumber(), textPos.getGlobalNumber())));
+			listToken.push_back(PToken(new PlainTextToken(word, textPos.getLineNumber(), textPos.getCharNumber(), textPos.getGlobalNumber())));
 		}
-		else if (nextChar() == '/' && getCurrentChar() == '>')
+
+		// jesteï¿½my na znaku <
+		nextChar();
+
+		if (getCurrentChar() == '!')
 		{
-			listToken.push_back(PToken(new EmptyClosingTagToken("/>", textPos.getLineNumber(), textPos.getCharNumber(), textPos.getGlobalNumber())));
+			nextChar();
+			expectComment();
+		}
+		else if (getCurrentChar() == '/')	// </
+		{
+			nextChar();
+			expectCloseTag();
 		}
 		else
-			throw std::runtime_error("Expected close tag " + printPosition());
-
-		nextChar();
-		if (stack.top() == "script")
 		{
-			handleScriptTag();
+			analyzeInnerTag();
+
+			if (getCurrentChar() == '>')
+			{
+				listToken.push_back(PToken(new TagClosingMarkToken(">", textPos.getLineNumber(), textPos.getCharNumber(), textPos.getGlobalNumber())));
+			}
+			else if (nextChar() == '/' && getCurrentChar() == '>')
+			{
+				listToken.push_back(PToken(new EmptyClosingTagToken("/>", textPos.getLineNumber(), textPos.getCharNumber(), textPos.getGlobalNumber())));
+			}
+			else
+				throw std::runtime_error("Expected close tag " + printPosition());
+
+			nextChar();
+			if (stack.top() == "script")
+			{
+				handleScriptTag();
+			}
+
 		}
+	}
+	catch(EOFexception e)
+	{
 
 	}
 

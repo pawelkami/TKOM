@@ -3,9 +3,7 @@
 
 using namespace std;
 
-string html = "<!doctype><html>aaaa<body><div>aaadasd</div></body></html>";
-
-// funkcja do czytania wejœciowego pliku html
+// funkcja do czytania wejï¿½ciowego pliku html
 string readData()
 {
 	string html;
@@ -23,7 +21,8 @@ string readData()
 
 int main(int argc, char** argv)
 {
-	html = readData();
+	string html = readData();
+
 	Lexer lexer = Lexer(html);
 
 	try
@@ -31,10 +30,11 @@ int main(int argc, char** argv)
 		lexer.findAllTokens();
 		lexer.printAllTokens();
 	}
-	catch (exception e)
+	catch (const runtime_error& e)
 	{
-		cout << e.what();
+		cout << e.what() << endl;
 	}
+
 
 	return 0;
 }
