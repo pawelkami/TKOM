@@ -19,18 +19,15 @@
     <Filter Include="Header Files\Tokens">
       <UniqueIdentifier>{f252b541-5511-4e24-874f-ebecd5c75aff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Elements">
+      <UniqueIdentifier>{2e102cdc-a601-44fc-8051-c054609396dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Elements">
+      <UniqueIdentifier>{79a12bfa-e48d-4910-a05d-93c90a19b5ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\tokens\AttributeKeyToken.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tokens\AttributeValueToken.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
     <ClCompile Include="src\tokens\ClosingTagToken.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tokens\CommentToken.cpp">
       <Filter>Source Files\Tokens</Filter>
     </ClCompile>
     <ClCompile Include="src\tokens\DoctypeToken.cpp">
@@ -40,9 +37,6 @@
       <Filter>Source Files\Tokens</Filter>
     </ClCompile>
     <ClCompile Include="src\tokens\EqualsToken.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tokens\PlainTextToken.cpp">
       <Filter>Source Files\Tokens</Filter>
     </ClCompile>
     <ClCompile Include="src\tokens\TagClosingMarkToken.cpp">
@@ -66,18 +60,27 @@
     <ClCompile Include="src\Tags.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\tokens\QuoteToken.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tokens\TextToken.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\elements\HtmlAttribute.cpp">
+      <Filter>Source Files\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\elements\HtmlElement.cpp">
+      <Filter>Source Files\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\tokens\AttributeKeyToken.h">
-      <Filter>Header Files\Tokens</Filter>
-    </ClInclude>
-    <ClInclude Include="src\tokens\AttributeValueToken.h">
-      <Filter>Header Files\Tokens</Filter>
-    </ClInclude>
     <ClInclude Include="src\tokens\ClosingTagToken.h">
-      <Filter>Header Files\Tokens</Filter>
-    </ClInclude>
-    <ClInclude Include="src\tokens\CommentToken.h">
       <Filter>Header Files\Tokens</Filter>
     </ClInclude>
     <ClInclude Include="src\tokens\DoctypeToken.h">
@@ -87,9 +90,6 @@
       <Filter>Header Files\Tokens</Filter>
     </ClInclude>
     <ClInclude Include="src\tokens\EqualsToken.h">
-      <Filter>Header Files\Tokens</Filter>
-    </ClInclude>
-    <ClInclude Include="src\tokens\PlainTextToken.h">
       <Filter>Header Files\Tokens</Filter>
     </ClInclude>
     <ClInclude Include="src\tokens\TagClosingMarkToken.h">
@@ -108,6 +108,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tokens\TextToken.h">
+      <Filter>Header Files\Tokens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tokens\QuoteToken.h">
+      <Filter>Header Files\Tokens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tokens\EOFToken.h">
+      <Filter>Header Files\Tokens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\elements\HtmlAttribute.h">
+      <Filter>Header Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="src\elements\HtmlElement.h">
+      <Filter>Header Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

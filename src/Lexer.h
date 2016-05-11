@@ -18,7 +18,7 @@
 #include <memory>
 
 // sprytny wskaŸnik na Token
-typedef std::unique_ptr<Token> PToken;
+typedef std::shared_ptr<Token> PToken;
 
 // Klasa Lexera
 class Lexer
@@ -30,18 +30,8 @@ private:
 	// lista tokenów
 	std::list<PToken> listToken;
 
-	// stos do sprawdzania poprawnoœci kolejnoœci tokenów
-	std::stack<std::string> stack;
-
 	// analizowany tekst
 	std::string htmlString;
-
-	// usuniêcie elementu ze szczytu stosu oraz porównanie go z podanym w argumencie tagiem
-	// jeœli s¹ ró¿ne to zostaje rzucony wyj¹tek spowodowany z³¹ kolejnoœci¹ tagów w pliku
-	void popStack(const std::string& tag);
-
-	// wrzucenie tagu podawanego w argumencie na szczyt stosu
-	void pushStack(const std::string& tag);
 
 	// metoda przechodz¹ca do nastêpnego znaku, zwraca znak przed inkrementacj¹
 	char nextChar();
@@ -64,21 +54,6 @@ private:
 	// metoda szuka s³owa a¿ do znaków zdefiniowancych w argumencie lub do bia³ego znaku
 	std::string getNextWordWhitespaces(char* bound);
 
-	// porównywanie stringów bez wzglêdu na wielkoœæ litery
-	bool compareCaseInsensitive(const std::string& str1, const std::string& str2);
-
-	// metoda pomocnicza, s³u¿y do zamienienia wszystkich znaków w stringu na ma³e
-	std::string makeLowerCase(const std::string& in);
-
-	// metoda sprawdzaj¹ca czy tag podany w argumencie jest prawid³owym tagiem w HTML
-	void checkTag(const std::string& tag);
-
-	// metoda sprawdzaj¹ca czy tag podany w argumencie jest tagiem pojedynczym(nie wymagaj¹cym zamkniêcia)
-	bool checkTagSingle(const std::string& tag);
-
-	// metoda zwracaj¹ca ci¹g znaków mówi¹cy o aktualnej pozycji w badanym tekœcie,
-	// u¿ywana przy wyœwietlaniu informacji o b³êdzie
-	std::string printPosition();
 
 	// metoda sprawdzaj¹ca czy pierwszy argument posiada jakis znak z argumentu 2
 	bool checkIfStringHasChar(const std::string& toCheck, const std::string& chars);
@@ -95,6 +70,10 @@ public:
 
 	// metoda wypisuj¹ca z listy wszystkie znalezione tokeny
 	void printAllTokens();
+
+	// metoda zwracaj¹ca ci¹g znaków mówi¹cy o aktualnej pozycji w badanym tekœcie,
+	// u¿ywana przy wyœwietlaniu informacji o b³êdzie
+	std::string printPosition();
 };
 
 #endif

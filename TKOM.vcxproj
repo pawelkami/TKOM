@@ -114,37 +114,42 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\elements\HtmlAttribute.cpp" />
+    <ClCompile Include="src\elements\HtmlElement.cpp" />
     <ClCompile Include="src\Lexer.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Parser.cpp" />
     <ClCompile Include="src\Tags.cpp" />
     <ClCompile Include="src\TextPosition.cpp" />
-    <ClCompile Include="src\tokens\AttributeKeyToken.cpp" />
-    <ClCompile Include="src\tokens\AttributeValueToken.cpp" />
     <ClCompile Include="src\tokens\ClosingTagToken.cpp" />
-    <ClCompile Include="src\tokens\CommentToken.cpp" />
     <ClCompile Include="src\tokens\DoctypeToken.cpp" />
     <ClCompile Include="src\tokens\EmptyClosingTagToken.cpp" />
     <ClCompile Include="src\tokens\EqualsToken.cpp" />
-    <ClCompile Include="src\tokens\PlainTextToken.cpp" />
+    <ClCompile Include="src\tokens\TextToken.cpp" />
+    <ClCompile Include="src\tokens\QuoteToken.cpp" />
     <ClCompile Include="src\tokens\TagClosingMarkToken.cpp" />
     <ClCompile Include="src\tokens\TagOpenerToken.cpp" />
     <ClCompile Include="src\tokens\Token.cpp" />
+    <ClCompile Include="src\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\elements\HtmlAttribute.h" />
+    <ClInclude Include="src\elements\HtmlElement.h" />
     <ClInclude Include="src\Lexer.h" />
+    <ClInclude Include="src\Parser.h" />
     <ClInclude Include="src\Tags.h" />
     <ClInclude Include="src\TextPosition.h" />
-    <ClInclude Include="src\tokens\AttributeKeyToken.h" />
-    <ClInclude Include="src\tokens\AttributeValueToken.h" />
     <ClInclude Include="src\tokens\ClosingTagToken.h" />
-    <ClInclude Include="src\tokens\CommentToken.h" />
     <ClInclude Include="src\tokens\DoctypeToken.h" />
     <ClInclude Include="src\tokens\EmptyClosingTagToken.h" />
+    <ClInclude Include="src\tokens\EOFToken.h" />
     <ClInclude Include="src\tokens\EqualsToken.h" />
-    <ClInclude Include="src\tokens\PlainTextToken.h" />
+    <ClInclude Include="src\tokens\TextToken.h" />
+    <ClInclude Include="src\tokens\QuoteToken.h" />
     <ClInclude Include="src\tokens\TagClosingMarkToken.h" />
     <ClInclude Include="src\tokens\TagOpenerToken.h" />
     <ClInclude Include="src\tokens\Token.h" />
+    <ClInclude Include="src\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

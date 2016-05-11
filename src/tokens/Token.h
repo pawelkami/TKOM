@@ -25,7 +25,6 @@ protected:
 	TextPosition textPos;
 
 public:
-	const TokenType type = None;
 
 	Token();
 	Token(std::string value);
@@ -45,6 +44,8 @@ public:
 	TextPosition getTextPosition();
 	int getLineNumber();
 	int getCharNumber();
+
+	virtual TokenType getType();
 };
 
 

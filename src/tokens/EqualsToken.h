@@ -9,11 +9,14 @@ class EqualsToken : public Token
 public:
 	const TokenType type = TokenType::Equals;
 
-	EqualsToken(TextPosition pos) : Token("=", pos) {}
+	EqualsToken(TextPosition pos) : Token("=", pos), type(Equals) {}
 
-	EqualsToken(int ln, int cn, int global) : Token("=", ln, cn, global) {}
+	EqualsToken(int ln, int cn, int global) : Token("=", ln, cn, global), type(Equals) {}
 
 	void print();
+
+	TokenType getType();
+
 
 };
 

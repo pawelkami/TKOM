@@ -1,5 +1,6 @@
 #include "Token.h"
 
+
 void Token::setValue(std::string value)
 {
 	this->value = value;
@@ -34,6 +35,11 @@ int Token::getLineNumber()
 int Token::getCharNumber()
 {
 	return textPos.getCharNumber();
+}
+
+TokenType Token::getType()
+{
+	return None;
 }
 
 Token::Token()

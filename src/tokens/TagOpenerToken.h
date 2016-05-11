@@ -7,12 +7,13 @@
 class TagOpenerToken : public Token
 {
 public:
-	const TokenType type = TokenType::TagOpener;
-
 	TagOpenerToken(TextPosition pos) : Token("<", pos) {}
 	TagOpenerToken( int ln, int cn, int global) : Token("<", ln, cn, global) {}
 
 	void print();
+
+	TokenType getType();
+
 };
 
 #endif

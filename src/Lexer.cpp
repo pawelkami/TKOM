@@ -5,23 +5,11 @@
 #include <locale>
 #include <iostream>
 #include <map>
+#include "utils.h"
 
 const std::string OPEN_COMMENT = "<!--";
 const std::string CLOSE_COMMENT = "-->";
 
-void Lexer::popStack(const std::string& tag)
-{
-	if (stack.top() != tag)
-	{
-		throw std::runtime_error("Bad order of tags - expected '" + stack.top() + "' and there is " + tag + " " + printPosition() + "\n");
-	}
-	stack.pop();
-}
-
-void Lexer::pushStack(const std::string& tag)
-{
-	stack.push(tag);
-}
 
 char Lexer::nextChar()
 {
@@ -104,36 +92,6 @@ std::string Lexer::getNextWordWhitespaces(char* bound)
 	return word;
 }
 
-bool Lexer::compareCaseInsensitive(const std::string& str1, const std::string& str2)
-{
-	if(str1.size() != str2.size())
-		return false;
-
-	return makeLowerCase(str1) == makeLowerCase(str2);
-}
-
-std::string Lexer::makeLowerCase(const std::string & in)
-{
-	std::string out;
-
-	std::transform(in.begin(), in.end(), std::back_inserter(out), tolower);
-	return out;
-}
-
-
-void Lexer::checkTag(const std::string & tag)
-{
-	if (!Tags::getInstance().checkIfTagExists(tag))
-	{
-		throw std::runtime_error("Tag " + tag + " does not exist " + printPosition() + "\n");
-	}
-
-}
-
-bool Lexer::checkTagSingle(const std::string & tag)
-{
-	return Tags::getInstance().checkIfTagIsSingle(makeLowerCase(tag));
-}
 
 std::string Lexer::printPosition()
 {

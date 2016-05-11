@@ -6,13 +6,14 @@
 class QuoteToken : public Token
 {
 public:
-	const TokenType type = TokenType::Quote;
-
 	QuoteToken(TextPosition pos) : Token("\"", pos) {}
 
 	QuoteToken(int ln, int cn, int global) : Token("\"", ln, cn, global) {}
 
 	void print();
+
+	TokenType getType();
+
 };
 
 #endif
