@@ -3,5 +3,5 @@
 
 void TagClosingMarkToken::print()
 {
-	std::cout << "[TagClosingMarkToken     ] " << ">" << "\n";
+	std::cout << "[TagClosingMarkToken     ] " << this->value << "\n";
 }

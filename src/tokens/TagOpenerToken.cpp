@@ -3,5 +3,5 @@
 
 void TagOpenerToken::print()
 {
-	std::cout << "[TagOpenerToken          ] " << "<" << this->value << "\n";
+	std::cout << "[TagOpenerToken          ] " << this->value << "\n";
 }

@@ -9,7 +9,8 @@ class TagClosingMarkToken : public Token
 public:
 	const TokenType type = TokenType::TagClosingMark;
 
-	TagClosingMarkToken(std::string value, int ln, int cn, int global) : Token(value, ln, cn, global) {}
+	TagClosingMarkToken(TextPosition pos) : Token(">", pos) {}
+	TagClosingMarkToken(int ln, int cn, int global) : Token(">", ln, cn, global) {}
 
 	void print();
 };

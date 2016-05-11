@@ -21,8 +21,8 @@ string readData()
 
 int main(int argc, char** argv)
 {
-	string html = readData();
-
+	//string html = readData();
+	string html = "<!doctype aaa><html><div></div>aaa</html>";
 	Lexer lexer = Lexer(html);
 
 	try
@@ -35,6 +35,6 @@ int main(int argc, char** argv)
 		cout << e.what() << endl;
 	}
 
-
+	cin.get();
 	return 0;
 }

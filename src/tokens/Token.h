@@ -7,16 +7,14 @@
 // enum mówi¹cy jakiego typu jest dany tag
 enum TokenType 
 {
-	AttributeKey,
-	AttributeValue,
 	ClosingTag,
-	Comment,
 	Doctype,
 	EmptyClosingTag,
 	Equals,
-	PlainText,
+	Text,
 	TagClosingMark,
 	TagOpener,
+	Quote,
 	None
 };
 

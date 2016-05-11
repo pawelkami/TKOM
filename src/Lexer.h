@@ -3,16 +3,15 @@
 
 #include "TextPosition.h"
 #include "tokens/Token.h"
-#include "tokens/AttributeKeyToken.h"
-#include "tokens/AttributeValueToken.h"
 #include "tokens/ClosingTagToken.h"
-#include "tokens/CommentToken.h"
 #include "tokens/DoctypeToken.h"
 #include "tokens/EmptyClosingTagToken.h"
 #include "tokens/EqualsToken.h"
-#include "tokens/PlainTextToken.h"
 #include "tokens/TagClosingMarkToken.h"
 #include "tokens/TagOpenerToken.h"
+#include "tokens/QuoteToken.h"
+#include "tokens/EOFToken.h"
+#include "tokens/TextToken.h"
 #include <list>
 #include <stack>
 #include "Tags.h"
@@ -53,6 +52,12 @@ private:
 	// metoda omijaj¹ca bia³e znaki
 	void skipWhitespaces();
 
+	// funkcja sprawdzaj¹ca czy s³owo le¿¹ce od aktualnej pozycji pasuje do s³owa z argumentu
+	bool match(const std::string& toCompare);
+
+	// przesuniêcie o n ci¹gu wejœciowego
+	void consumeChars(int n);
+
 	// metoda szuka s³owa a¿ do znaków zdefiniowanych w argumencie
 	std::string getNextWord(char* bound);
 
@@ -64,27 +69,6 @@ private:
 
 	// metoda pomocnicza, s³u¿y do zamienienia wszystkich znaków w stringu na ma³e
 	std::string makeLowerCase(const std::string& in);
-
-	// metoda szukaj¹ca doctype
-	void findDoctype();
-
-	// metoda oczekuj¹ca komentarza
-	void expectComment();
-
-	// metoda oczekuj¹ca zamkniêca tagu
-	void expectCloseTag();
-
-	// metoda oczekuj¹ca s³owa w podwójnym cudzys³owie
-	void expectDoubleQuotes();
-
-	// metoda oczekuj¹ca s³owa w apostrofach
-	void expectSingleQuote();
-
-	// metoda zajmuj¹ca siê tagiem script
-	void handleScriptTag();
-
-	// metoda analizuj¹ca ci¹g znaków pomiêdzy < i /> lub < i >
-	void analyzeInnerTag();
 
 	// metoda sprawdzaj¹ca czy tag podany w argumencie jest prawid³owym tagiem w HTML
 	void checkTag(const std::string& tag);
@@ -106,8 +90,8 @@ public:
 	// funkcja znajduj¹ca wszystkie tokeny
 	void findAllTokens();
 
-	// funkcja szukaj¹ca kolejnego tokenu
-	void nextToken();
+	// metoda zwracaj¹ca kolejny token
+	PToken getNextToken();
 
 	// metoda wypisuj¹ca z listy wszystkie znalezione tokeny
 	void printAllTokens();
