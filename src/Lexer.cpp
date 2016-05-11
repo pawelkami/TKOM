@@ -208,12 +208,6 @@ PToken Lexer::getNextToken()
 
 	char c = getCurrentChar();
 
-	// słowa
-	if (isalpha(c))
-	{
-		std::string word = getNextWordWhitespaces("<>/\"=");
-		return PToken(new TextToken(word, atompos));
-	}
 
 	// znaki terminalne
 	switch (c)
@@ -259,7 +253,12 @@ PToken Lexer::getNextToken()
 			nextChar();
 			return PToken(new EqualsToken(atompos));
 
-		default:
+		case EOF:
 			return PToken(new EOFToken(atompos));
 	}	
+	
+	// słowa
+	std::string word = getNextWordWhitespaces("<>/\"=");
+	return PToken(new TextToken(word, atompos));
 }
+

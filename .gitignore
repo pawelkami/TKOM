@@ -32,3 +32,7 @@ Release/*
 .vs/*
 *.opendb
 *.sdf
+
+build/*
+test/*
+.idea/*

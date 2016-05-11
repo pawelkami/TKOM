@@ -10,16 +10,15 @@ set(SOURCES
     src/Tags.cpp
     src/TextPosition.cpp
     src/tokens/Token.cpp
-    src/tokens/AttributeKeyToken.cpp    
+    src/tokens/QuoteToken.cpp    
     src/tokens/DoctypeToken.cpp          
     src/tokens/TagClosingMarkToken.cpp
-    src/tokens/AttributeValueToken.cpp  
     src/tokens/EmptyClosingTagToken.cpp  
     src/tokens/TagOpenerToken.cpp
     src/tokens/ClosingTagToken.cpp      
     src/tokens/EqualsToken.cpp           
-    src/tokens/CommentToken.cpp         
-    src/tokens/PlainTextToken.cpp
+    src/tokens/TextToken.cpp
+    src/tokens/EOFToken.cpp
     src/Lexer.cpp
     src/main.cpp
    )
