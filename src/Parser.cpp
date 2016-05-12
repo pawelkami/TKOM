@@ -24,7 +24,7 @@ void Parser::handleScript()
 {
 	do {
 		nextToken();
-	} while (actToken->getType() != ClosingTag || actToken->getType() != None);
+	} while (actToken->getType() != ClosingTag && actToken->getType() != None);
 
 	if (actToken->getType() == None)
 		throw std::runtime_error("Unexpected end of file " + lexer.printPosition());
@@ -56,7 +56,7 @@ void Parser::analyzeAttributes(PHtmlElement& el)
 		else if (actToken->getType() == Text)
 		{
 			std::string name = actToken->getValue();
-			std::string value;
+			std::string value = "";
 
 			nextToken();
 
@@ -78,7 +78,7 @@ void Parser::analyzeAttributes(PHtmlElement& el)
 				el->attributes.push_back(HtmlAttribute(name));
 			}
 
-			continue;	// poniewa¿ ju¿ robiliœmy nextToken
+			//continue;	// poniewa¿ ju¿ robiliœmy nextToken
 		}
 		else if (actToken->getType() == None)
 		{
@@ -103,7 +103,7 @@ std::string Parser::handleQuote()
 	nextToken();
 
 	// tak d³ugo jak tokeny typu tekst to ³¹czymy
-	while (actToken->getType() == Text)
+	while (actToken->getType() != Quote && actToken->getType() != None)
 	{
 		ret += actToken->getValue();
 		nextToken();
@@ -113,6 +113,8 @@ std::string Parser::handleQuote()
 	{
 		throw std::runtime_error("Expected quote " + lexer.printPosition());
 	}
+
+	return ret;
 }
 
 void Parser::nextToken()
@@ -135,9 +137,19 @@ PHtmlElement Parser::parseTag()
 		if (checkTagSingle(el->tag))
 			el->parsed = true;
 
+		// jeœli nie ma nic na stosie to dodajemy do dzieci roota
+		if (stack.empty())
+			root->children.push_back(el);
+		
+		if (!stack.empty())
+			stack.top()->children.push_back(el);
+
 		// jeœli tag nie jest samozamykaj¹cy lub nie napotkaliœmy na /> to zapamiêtujemy go na stosie
 		if (!(el->parsed))
+		{
+
 			pushStack(el);
+		}
 
 	}
 	else
@@ -149,7 +161,7 @@ PHtmlElement Parser::parseTag()
 	return el;
 }
 
-Parser::Parser(std::string html) : lexer(Lexer(html))
+Parser::Parser(const std::string& html) : lexer(Lexer(html))
 {
 	root = std::make_unique<HtmlElement>();
 }
@@ -167,11 +179,7 @@ void Parser::parse()
 		} 
 		else if (actToken->getType() == TagOpener)
 		{
-			PHtmlElement el = parseTag();
-			if (stack.empty())
-				root->children.push_back(el);
-			else
-				stack.top()->children.push_back(el);
+			parseTag();
 		}
 		else if (actToken->getType() == Text)
 		{
@@ -185,6 +193,8 @@ void Parser::parse()
 				root->text += text;
 			else
 				stack.top()->text += text;
+
+			continue;	// bo nextToken() by³ w do while
 		}
 		else if (actToken->getType() == Doctype)
 		{

@@ -60,7 +60,7 @@ private:
 
 public:
 	// html - string reprezentuj¹cy badany plik
-	Lexer(std::string html);
+	Lexer(const std::string& html);
 
 	// funkcja znajduj¹ca wszystkie tokeny
 	void findAllTokens();

@@ -1,31 +1,34 @@
 #include <iostream>
+#include <fstream>
 #include "Lexer.h"
 #include "Parser.h"
 
 using namespace std;
 
 // funkcja do czytania wej�ciowego pliku html
-string readData()
+void readData(string& html)
 {
-	string html;
-	while (!cin.eof())
+	ifstream ifs("./test/testVirusTotal.html");
+	while (!ifs.eof())
 	{
 		string tmp;
-		getline(cin, tmp);
+		getline(ifs, tmp);
 		tmp += "\n";
 		html += tmp;
 	}
-
-	return html;
 }
 
 
 int main(int argc, char** argv)
 {
-	//string html = readData();
-	string html = "<!doctype aaa><html><div></div>aaa</html>";
+	string html;
+	readData(html);
+	//string html = "<!doctype aaa><html><div></div>aaa</html>";
 	//string html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">";
-	Lexer lexer = Lexer(html);
+
+	//ifstream ifs("./test/testVirusTotal.html");
+	//getline(ifs, html, (char)ifs.eof());
+	//Lexer lexer = Lexer(html);
 
 	try
 	{

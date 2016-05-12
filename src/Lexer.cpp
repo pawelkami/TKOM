@@ -119,7 +119,7 @@ void Lexer::printAllTokens()
 		tok->print();
 }
 
-Lexer::Lexer(std::string html)
+Lexer::Lexer(const std::string& html)
 {
 	textPos = TextPosition();
 	htmlString = html;
@@ -137,10 +137,11 @@ void Lexer::findAllTokens()
 
 PToken Lexer::getNextToken()
 {
-	skipWhitespaces();
+	std::locale loc;	// potrzebne żeby isspace nie miał problemów z analizowaniem znaków innych niż ascii
 	// komentarze i koniec pliku
 	do
 	{
+		skipWhitespaces();
 		if (getCurrentChar() == EOF)
 			return PToken(new EOFToken(textPos.getLineNumber(), textPos.getLineNumber(), textPos.getGlobalNumber()));
 		else if (match(OPEN_COMMENT)) // obsługa komentarza
@@ -160,7 +161,7 @@ PToken Lexer::getNextToken()
 		}
 		
 
-	} while (isspace(getCurrentChar()) || match(OPEN_COMMENT));
+	} while (isspace(getCurrentChar(), loc) || match(OPEN_COMMENT));
 
 	TextPosition atompos(textPos);
 

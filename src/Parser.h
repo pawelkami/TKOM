@@ -43,7 +43,7 @@ private:
 	// wrzucenie tagu podawanego w argumencie na szczyt stosu
 	void pushStack(PHtmlElement& tag);
 public:
-	Parser(std::string html);
+	Parser(const std::string& html);
 
 	void parse();
 
