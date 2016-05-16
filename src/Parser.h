@@ -47,6 +47,8 @@ public:
 
 	void parse();
 
+	PHtmlElement& getRoot();
+
 
 };
 

@@ -9,7 +9,7 @@ void Parser::handleDoctype()
 		throw std::runtime_error("Expected doctype " + lexer.printPosition());
 	}
 
-	PHtmlElement el(new HtmlElement());
+	PHtmlElement el = std::make_shared<HtmlElement>();
 	
 	analyzeAttributes(el);
 
@@ -75,10 +75,9 @@ void Parser::analyzeAttributes(PHtmlElement& el)
 			}
 			else
 			{
-				el->attributes.push_back(HtmlAttribute(name));
+				el->attributes.push_back(HtmlAttribute(name)); 
+				continue;
 			}
-
-			//continue;	// poniewa¿ ju¿ robiliœmy nextToken
 		}
 		else if (actToken->getType() == None)
 		{
@@ -106,6 +105,11 @@ std::string Parser::handleQuote()
 	while (actToken->getType() != Quote && actToken->getType() != None)
 	{
 		ret += actToken->getValue();
+		
+		// dodajemy spacjê jeœli token jest typu tekst
+		if (actToken->getType() == Text)
+			ret += " ";
+
 		nextToken();
 	}
 
@@ -125,7 +129,7 @@ void Parser::nextToken()
 PHtmlElement Parser::parseTag()
 {
 	nextToken();
-	PHtmlElement el = std::make_unique<HtmlElement>();
+	PHtmlElement el = std::make_shared<HtmlElement>();
 	
 	if (actToken->getType() == Text)
 	{
@@ -147,7 +151,6 @@ PHtmlElement Parser::parseTag()
 		// jeœli tag nie jest samozamykaj¹cy lub nie napotkaliœmy na /> to zapamiêtujemy go na stosie
 		if (!(el->parsed))
 		{
-
 			pushStack(el);
 		}
 
@@ -186,6 +189,7 @@ void Parser::parse()
 			std::string text;
 			do {
 				text += actToken->getValue();
+				text += " ";
 				nextToken();
 			} while (actToken->getType() == Text || actToken->getType() == Quote);
 			
@@ -219,6 +223,11 @@ void Parser::parse()
 		nextToken();
 
 	}
+}
+
+PHtmlElement & Parser::getRoot()
+{
+	return root;
 }
 
 void Parser::checkTag(const std::string & tag)

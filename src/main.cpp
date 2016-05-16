@@ -2,13 +2,14 @@
 #include <fstream>
 #include "Lexer.h"
 #include "Parser.h"
+#include "ResultsAnalyzer.h"
 
 using namespace std;
 
 // funkcja do czytania wej�ciowego pliku html
-void readData(string& html)
+void readData(string& html, const string& path)
 {
-	ifstream ifs("./test/testVirusTotal.html");
+	ifstream ifs(path);
 	while (!ifs.eof())
 	{
 		string tmp;
@@ -21,14 +22,17 @@ void readData(string& html)
 
 int main(int argc, char** argv)
 {
+	if (argc != 2)
+	{
+		cout << "Usage:" << endl
+			<< "./TKOM filename" << endl;
+		return 1;
+	}
 	string html;
-	readData(html);
+	readData(html, argv[1]);
 	//string html = "<!doctype aaa><html><div></div>aaa</html>";
-	//string html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">";
 
-	//ifstream ifs("./test/testVirusTotal.html");
-	//getline(ifs, html, (char)ifs.eof());
-	//Lexer lexer = Lexer(html);
+	Lexer lexer = Lexer(html);
 
 	try
 	{
@@ -36,13 +40,15 @@ int main(int argc, char** argv)
 		//lexer.printAllTokens();
 		Parser parser(html);
 		parser.parse();
-
+		
+		ResultsAnalyzer analyzer(parser.getRoot());
+		analyzer.analyze();
 	}
 	catch (const runtime_error& e)
 	{
 		cout << e.what() << endl;
 	}
 
-	cin.get();
+
 	return 0;
 }

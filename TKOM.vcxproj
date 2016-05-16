@@ -119,6 +119,7 @@
     <ClCompile Include="src\Lexer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Parser.cpp" />
+    <ClCompile Include="src\ResultsAnalyzer.cpp" />
     <ClCompile Include="src\Tags.cpp" />
     <ClCompile Include="src\TextPosition.cpp" />
     <ClCompile Include="src\tokens\ClosingTagToken.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="src\elements\HtmlElement.h" />
     <ClInclude Include="src\Lexer.h" />
     <ClInclude Include="src\Parser.h" />
+    <ClInclude Include="src\ResultsAnalyzer.h" />
     <ClInclude Include="src\Tags.h" />
     <ClInclude Include="src\TextPosition.h" />
     <ClInclude Include="src\tokens\ClosingTagToken.h" />

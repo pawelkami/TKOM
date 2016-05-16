@@ -2,7 +2,7 @@
 #define HTMLELEMENT_H
 
 #include <string>
-#include <list>
+#include <vector>
 #include "HtmlAttribute.h"
 #include <memory>
 
@@ -22,10 +22,10 @@ public:
 	std::string text;
 
 	// lista wskaŸników na elementy le¿¹ce wewn¹trz danego tagu
-	std::list<PHtmlElement> children;
+	std::vector<PHtmlElement> children;
 
 	// lista atrybutów
-	std::list<HtmlAttribute> attributes;
+	std::vector<HtmlAttribute> attributes;
 
 	bool parsed;
 };
