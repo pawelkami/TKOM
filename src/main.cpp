@@ -40,7 +40,7 @@ int main(int argc, char** argv)
 		//lexer.printAllTokens();
 		Parser parser(html);
 		parser.parse();
-		
+
 		ResultsAnalyzer analyzer(parser.getRoot());
 		analyzer.analyze();
 	}

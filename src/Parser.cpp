@@ -106,11 +106,12 @@ std::string Parser::handleQuote()
 	{
 		ret += actToken->getValue();
 		
+		nextToken();
+		
 		// dodajemy spacjê jeœli token jest typu tekst
 		if (actToken->getType() == Text)
 			ret += " ";
 
-		nextToken();
 	}
 
 	if (actToken->getType() != Quote)

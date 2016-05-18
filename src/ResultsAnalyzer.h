@@ -9,12 +9,14 @@ private:
 	PHtmlElement root;
 
 
+	PHtmlElement findElement(const std::string& attr, const std::string& value);
+public:
 	// funkcja wypisuj¹ca podstawowe informacje o pliku
 	void getBasicInfo();
 
 	// funkcja wypisuj¹ca listê antywirusów
 	void getAntyvirList();
-public:
+	
 	ResultsAnalyzer(PHtmlElement& r) : root(r) {}
 	~ResultsAnalyzer();
 
