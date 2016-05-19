@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include <memory>
 
 void Parser::handleDoctype()
 {
@@ -167,7 +168,7 @@ PHtmlElement Parser::parseTag()
 
 Parser::Parser(const std::string& html) : lexer(Lexer(html))
 {
-	root = std::make_unique<HtmlElement>();
+	root = std::make_shared<HtmlElement>();
 }
 
 void Parser::parse()
