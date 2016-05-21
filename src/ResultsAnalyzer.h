@@ -12,10 +12,18 @@ private:
 	PHtmlElement findElement(const std::string& attr, const std::string& value);
 public:
 	// funkcja wypisuj¹ca podstawowe informacje o pliku
-	void getBasicInfo();
+	std::string getBasicInfo();
 
 	// funkcja wypisuj¹ca listê antywirusów
-	void getAntyvirList();
+	std::string getAntyvirList();
+
+	std::string getSHA();
+
+	std::string getFilename();
+
+	std::string getDetectionRatio();
+
+	std::string getAnalysisDate();
 	
 	ResultsAnalyzer(PHtmlElement& r) : root(r) {}
 	~ResultsAnalyzer();

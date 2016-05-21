@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <stack>
+#include <sstream>
 
 using namespace std;
 
@@ -28,47 +29,114 @@ PHtmlElement ResultsAnalyzer::findElement(const std::string& attr, const std::st
 	return PHtmlElement();
 }
 
-void ResultsAnalyzer::getBasicInfo()
+std::string ResultsAnalyzer::getBasicInfo()
 {
 	// <div id="basic-info">
 	
 	auto basicInfo = findElement("id", "basic-info");
+	stringstream ss;
 	
 	if (basicInfo)
 	{
 		basicInfo = basicInfo->children[0]->children[0]->children[0]->children[0];
 		// SHA
-		cout << basicInfo->children[0]->children[0]->text << basicInfo->children[0]->children[1]->text << endl;
+		ss << basicInfo->children[0]->children[0]->text << basicInfo->children[0]->children[1]->text << endl;
 
 		// nazwa pliku
-		cout << basicInfo->children[1]->children[0]->text << basicInfo->children[1]->children[1]->text << endl;
+		ss << basicInfo->children[1]->children[0]->text << basicInfo->children[1]->children[1]->text << endl;
 
 		// wspó³czynnik wykrycia
-		cout << basicInfo->children[2]->children[0]->text << basicInfo->children[2]->children[1]->text << endl;
+		ss << basicInfo->children[2]->children[0]->text << basicInfo->children[2]->children[1]->text << endl;
 
 		// data analizy
-		cout << basicInfo->children[3]->children[0]->text << basicInfo->children[3]->children[1]->text << endl;
+		ss << basicInfo->children[3]->children[0]->text << basicInfo->children[3]->children[1]->text << endl;
 	}
+
+	return ss.str();
 
 
 }
 
-void ResultsAnalyzer::getAntyvirList()
+std::string ResultsAnalyzer::getAntyvirList()
 {
 	auto results = findElement("id", "antivirus-results");
-	
+	stringstream ss;
+
 	if (results)
 	{
-		cout << setw(21) << "Antywirus" << setw(32) << "Nazwa wykryta" << setw(14) << "Data analizy" << endl;
+		ss << setw(21) << "Antywirus" << setw(32) << "Nazwa wykryta" << setw(14) << "Data analizy" << endl;
 		for (auto& c : results->children[1]->children)
 		{
 			if (c->children[1]->attributes[0].value.find("green") != std::string::npos)
-				cout << setw(21) << c->children[0]->text << setw(32) << "File not detected" << setw(14) << c->children[2]->text << endl;
+				ss << setw(21) << c->children[0]->text << setw(32) << "File not detected" << setw(14) << c->children[2]->text << endl;
 			else
-				cout << setw(21) << c->children[0]->text << setw(32) << c->children[1]->text << setw(14) << c->children[2]->text << endl;
+				ss << setw(21) << c->children[0]->text << setw(32) << c->children[1]->text << setw(14) << c->children[2]->text << endl;
 	
 		}
 	}
+
+	return ss.str();
+}
+
+std::string ResultsAnalyzer::getSHA()
+{
+	auto basicInfo = findElement("id", "basic-info");
+	stringstream ss;
+
+	if (basicInfo)
+	{
+		basicInfo = basicInfo->children[0]->children[0]->children[0]->children[0];
+		// SHA
+		ss << basicInfo->children[0]->children[0]->text << basicInfo->children[0]->children[1]->text << endl;
+	}
+
+	return ss.str();
+}
+
+std::string ResultsAnalyzer::getFilename()
+{
+	auto basicInfo = findElement("id", "basic-info");
+	stringstream ss;
+
+	if (basicInfo)
+	{
+		basicInfo = basicInfo->children[0]->children[0]->children[0]->children[0];
+		// nazwa pliku
+		ss << basicInfo->children[1]->children[0]->text << basicInfo->children[1]->children[1]->text << endl;
+	}
+
+	return ss.str();
+}
+
+std::string ResultsAnalyzer::getDetectionRatio()
+{
+	auto basicInfo = findElement("id", "basic-info");
+	stringstream ss;
+
+	if (basicInfo)
+	{
+		basicInfo = basicInfo->children[0]->children[0]->children[0]->children[0];
+		// detection ratio
+		ss << basicInfo->children[2]->children[0]->text << basicInfo->children[2]->children[1]->text << endl;
+	}
+
+	return ss.str();
+
+}
+
+std::string ResultsAnalyzer::getAnalysisDate()
+{
+	auto basicInfo = findElement("id", "basic-info");
+	stringstream ss;
+
+	if (basicInfo)
+	{
+		basicInfo = basicInfo->children[0]->children[0]->children[0]->children[0];
+		// analysis date
+		ss << basicInfo->children[3]->children[0]->text << basicInfo->children[3]->children[1]->text << endl;
+	}
+
+	return ss.str();
 }
 
 ResultsAnalyzer::~ResultsAnalyzer()
@@ -77,7 +145,7 @@ ResultsAnalyzer::~ResultsAnalyzer()
 
 void ResultsAnalyzer::analyze()
 {
-	getBasicInfo();
+	cout << getBasicInfo();
 	cout << endl;
-	getAntyvirList();
+	cout << getAntyvirList();
 }
