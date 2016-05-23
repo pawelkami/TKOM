@@ -225,6 +225,9 @@ void Parser::parse()
 		nextToken();
 
 	}
+
+	if (!stack.empty())
+		throw std::runtime_error("Not all tags are closed! Expected </" + stack.top()->tag + ">");
 }
 
 PHtmlElement & Parser::getRoot()
