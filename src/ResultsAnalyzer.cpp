@@ -139,6 +139,53 @@ std::string ResultsAnalyzer::getAnalysisDate()
 	return ss.str();
 }
 
+std::string ResultsAnalyzer::getFileDetails()
+{
+	auto fileDetails = findElement("id", "file-details");
+	stringstream ss;
+
+	if (fileDetails)
+	{
+		// enum-container
+		fileDetails = fileDetails->children[1];
+
+		for (int i = 0; i < fileDetails->children.size(); ++i)
+		{
+			if(fileDetails->children[i]->children.size() == 1 && !fileDetails->children[i]->text.empty())
+				ss << fileDetails->children[i]->children[0]->text << ": " << fileDetails->children[i]->text << endl;
+		}
+	}
+
+	return ss.str();
+}
+
+std::string ResultsAnalyzer::getMetadata()
+{
+	auto fileDetails = findElement("id", "file-details");
+	stringstream ss;
+
+	if (fileDetails)
+	{
+		// enum-container
+		fileDetails = fileDetails->children[3];
+
+		// first submission
+		ss << fileDetails->children[0]->children[0]->text << ": " << fileDetails->children[0]->text << endl;
+		
+		// last submission
+		ss << fileDetails->children[1]->children[0]->text << ": " << fileDetails->children[1]->text << endl;
+
+		// nazwy plików
+		ss << fileDetails->children[2]->children[0]->children[0]->children[0]->text << ": "
+		   << fileDetails->children[2]->children[0]->children[0]->children[1]->text << endl;
+
+	}
+
+	return ss.str();
+}
+
+
+
 ResultsAnalyzer::~ResultsAnalyzer()
 {
 }

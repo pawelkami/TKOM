@@ -24,8 +24,13 @@ public:
 	std::string getDetectionRatio();
 
 	std::string getAnalysisDate();
+
+	std::string getFileDetails();
+
+	std::string getMetadata();
 	
 	ResultsAnalyzer(PHtmlElement& r) : root(r) {}
+	
 	~ResultsAnalyzer();
 
 	void analyze();
