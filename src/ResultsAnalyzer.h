@@ -8,8 +8,10 @@ class ResultsAnalyzer
 private:
 	PHtmlElement root;
 
-
 	PHtmlElement findElement(const std::string& attr, const std::string& value);
+
+	PHtmlElement findElement(const std::string& attr, const std::string& value, const PHtmlElement& begin);
+
 public:
 	// funkcja wypisuj¹ca podstawowe informacje o pliku
 	std::string getBasicInfo();

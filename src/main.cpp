@@ -30,14 +30,11 @@ int main(int argc, char** argv)
 	}
 	string html;
 	readData(html, argv[1]);
-	//string html = "<!doctype aaa><html><div></div>aaa</html>";
 
 	Lexer lexer = Lexer(html);
 
 	try
 	{
-		//lexer.findAllTokens();
-		//lexer.printAllTokens();
 		Parser parser(html);
 		parser.parse();
 

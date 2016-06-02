@@ -9,8 +9,13 @@ using namespace std;
 
 PHtmlElement ResultsAnalyzer::findElement(const std::string& attr, const std::string& value)
 {
+	return findElement(attr, value, root);
+}
+
+PHtmlElement ResultsAnalyzer::findElement(const std::string & attr, const std::string & value, const PHtmlElement & begin)
+{
 	stack<PHtmlElement> stack;
-	stack.push(root);
+	stack.push(begin);
 	while (!stack.empty())
 	{
 		auto el = stack.top();
@@ -149,10 +154,12 @@ std::string ResultsAnalyzer::getFileDetails()
 		// enum-container
 		fileDetails = fileDetails->children[1];
 
-		for (int i = 0; i < fileDetails->children.size(); ++i)
+		for (auto& c : fileDetails->children)
 		{
-			if(fileDetails->children[i]->children.size() == 1 && !fileDetails->children[i]->text.empty())
-				ss << fileDetails->children[i]->children[0]->text << ": " << fileDetails->children[i]->text << endl;
+			auto key = findElement("class", "field-key", c);
+			auto value = findElement("class", "field-value", c);
+			if(key)
+				ss << key->text << ": " << (value ? value->text : c->text) << endl;
 		}
 	}
 
@@ -169,16 +176,12 @@ std::string ResultsAnalyzer::getMetadata()
 		// enum-container
 		fileDetails = fileDetails->children[3];
 
-		// first submission
-		ss << fileDetails->children[0]->children[0]->text << ": " << fileDetails->children[0]->text << endl;
-		
-		// last submission
-		ss << fileDetails->children[1]->children[0]->text << ": " << fileDetails->children[1]->text << endl;
-
-		// nazwy plików
-		ss << fileDetails->children[2]->children[0]->children[0]->children[0]->text << ": "
-		   << fileDetails->children[2]->children[0]->children[0]->children[1]->text << endl;
-
+		for (auto& c : fileDetails->children)
+		{
+			auto key = findElement("class", "field-key", c);
+			auto value = findElement("class", "field-value", c);
+			ss << key->text << ": " << (value ? value->text : c->text) << endl;
+		}
 	}
 
 	return ss.str();
