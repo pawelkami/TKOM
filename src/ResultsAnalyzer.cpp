@@ -50,7 +50,7 @@ std::string ResultsAnalyzer::getBasicInfo()
 		// nazwa pliku
 		ss << basicInfo->children[1]->children[0]->text << basicInfo->children[1]->children[1]->text << endl;
 
-		// wsp�czynnik wykrycia
+		// wspó³czynnik wykrycia
 		ss << basicInfo->children[2]->children[0]->text << basicInfo->children[2]->children[1]->text << endl;
 
 		// data analizy
@@ -151,8 +151,21 @@ std::string ResultsAnalyzer::getFileDetails()
 
 	if (fileDetails)
 	{
-		// enum-container
-		fileDetails = fileDetails->children[1];
+        //szukamy miejsca w którym znajduja sie szczegoly
+        bool found = false;
+        for(int i = 0; i < fileDetails->children.size(); ++i)
+        {
+            if(fileDetails->children[i]->text.find("File identification") != string::npos)
+            {
+                fileDetails = fileDetails->children[i+1];
+                found = true;
+                break;
+            }
+        }
+
+        // jeśli nie znalezlismy to zwracamy pusty string
+        if(!found)
+            return "";
 
 		for (auto& c : fileDetails->children)
 		{
@@ -173,8 +186,21 @@ std::string ResultsAnalyzer::getMetadata()
 
 	if (fileDetails)
 	{
-		// enum-container
-		fileDetails = fileDetails->children[3];
+		//szukamy miejsca w którym znajduje się metadata
+		bool found = false;
+		for(int i = 0; i < fileDetails->children.size(); ++i)
+		{
+			if(fileDetails->children[i]->text.find("metadata") != string::npos)
+			{
+				fileDetails = fileDetails->children[i+1];
+				found = true;
+				break;
+			}
+		}
+
+		// jeśli nie znalezlismy to zwracamy pusty string
+		if(!found)
+			return "";
 
 		for (auto& c : fileDetails->children)
 		{
