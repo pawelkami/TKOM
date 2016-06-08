@@ -12,11 +12,22 @@ private:
 
 	PHtmlElement findElement(const std::string& attr, const std::string& value, const PHtmlElement& begin);
 
+	std::string getKeyName(const std::string& key);
+
+	std::string getValueName(const std::string& val);
+
+	std::string makeJsonKeyValue(const std::string& key, const std::string& val, bool isValueJson=false);
+
+    std::string makeJsonList(const std::string& str);
+
+
 public:
-	// funkcja wypisuj¹ca podstawowe informacje o pliku
+	std::string makeJson(const std::string& str);
+
+	// funkcja wypisujï¿½ca podstawowe informacje o pliku
 	std::string getBasicInfo();
 
-	// funkcja wypisuj¹ca listê antywirusów
+	// funkcja wypisujï¿½ca listï¿½ antywirusï¿½w
 	std::string getAntyvirList();
 
 	std::string getSHA();

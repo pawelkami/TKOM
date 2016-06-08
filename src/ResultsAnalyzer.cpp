@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <stack>
 #include <sstream>
+#include "utils.h"
 
 using namespace std;
 
@@ -40,24 +41,27 @@ std::string ResultsAnalyzer::getBasicInfo()
 	
 	auto basicInfo = findElement("id", "basic-info");
 	stringstream ss;
-	
+    std::string result = "";
+
 	if (basicInfo)
 	{
 		basicInfo = basicInfo->children[0]->children[0]->children[0]->children[0];
 		// SHA
-		ss << basicInfo->children[0]->children[0]->text << basicInfo->children[0]->children[1]->text << endl;
+        ss << makeJsonKeyValue(basicInfo->children[0]->children[0]->text, basicInfo->children[0]->children[1]->text) << endl;
 
 		// nazwa pliku
-		ss << basicInfo->children[1]->children[0]->text << basicInfo->children[1]->children[1]->text << endl;
+        ss << makeJsonKeyValue(basicInfo->children[1]->children[0]->text, basicInfo->children[1]->children[1]->text) << endl;
 
 		// wspó³czynnik wykrycia
-		ss << basicInfo->children[2]->children[0]->text << basicInfo->children[2]->children[1]->text << endl;
+        ss << makeJsonKeyValue(basicInfo->children[2]->children[0]->text, basicInfo->children[2]->children[1]->text) << endl;
 
 		// data analizy
-		ss << basicInfo->children[3]->children[0]->text << basicInfo->children[3]->children[1]->text << endl;
+        ss << makeJsonKeyValue(basicInfo->children[3]->children[0]->text, basicInfo->children[3]->children[1]->text) << endl;
+
+        result = makeJsonKeyValue("basic_info", makeJson(ss.str()), true);
 	}
 
-	return ss.str();
+	return result;
 
 
 }
@@ -66,21 +70,27 @@ std::string ResultsAnalyzer::getAntyvirList()
 {
 	auto results = findElement("id", "antivirus-results");
 	stringstream ss;
-
+    string result = "";
 	if (results)
-	{
-		ss << setw(21) << "Antywirus" << setw(32) << "Nazwa wykryta" << setw(14) << "Data analizy" << endl;
+    {
 		for (auto& c : results->children[1]->children)
 		{
 			if (c->children[1]->attributes[0].value.find("green") != std::string::npos)
-				ss << setw(21) << c->children[0]->text << setw(32) << "File not detected" << setw(14) << c->children[2]->text << endl;
+            {
+                ss << makeJson(makeJsonKeyValue("antivirus", c->children[0]->text) + makeJsonKeyValue("detection", "File not detected")
+                               + makeJsonKeyValue("date",c->children[2]->text)) << "," <<  endl;
+            }
 			else
-				ss << setw(21) << c->children[0]->text << setw(32) << c->children[1]->text << setw(14) << c->children[2]->text << endl;
-	
+            {
+                ss << makeJson(makeJsonKeyValue("antivirus", c->children[0]->text) + makeJsonKeyValue("detection", c->children[1]->text)
+                               + makeJsonKeyValue("date",c->children[2]->text)) << "," << endl;
+            }
+
 		}
+        result = makeJsonKeyValue("antivir_list", makeJsonList(ss.str()), true);
 	}
 
-	return ss.str();
+	return result;
 }
 
 std::string ResultsAnalyzer::getSHA()
@@ -92,8 +102,8 @@ std::string ResultsAnalyzer::getSHA()
 	{
 		basicInfo = basicInfo->children[0]->children[0]->children[0]->children[0];
 		// SHA
-		ss << basicInfo->children[0]->children[0]->text << basicInfo->children[0]->children[1]->text << endl;
-	}
+        ss << makeJsonKeyValue(basicInfo->children[0]->children[0]->text, basicInfo->children[0]->children[1]->text);
+    }
 
 	return ss.str();
 }
@@ -103,12 +113,14 @@ std::string ResultsAnalyzer::getFilename()
 	auto basicInfo = findElement("id", "basic-info");
 	stringstream ss;
 
-	if (basicInfo)
+
+    if (basicInfo)
 	{
 		basicInfo = basicInfo->children[0]->children[0]->children[0]->children[0];
 		// nazwa pliku
-		ss << basicInfo->children[1]->children[0]->text << basicInfo->children[1]->children[1]->text << endl;
-	}
+        ss << makeJsonKeyValue(basicInfo->children[1]->children[0]->text, basicInfo->children[1]->children[1]->text);
+
+    }
 
 	return ss.str();
 }
@@ -122,7 +134,7 @@ std::string ResultsAnalyzer::getDetectionRatio()
 	{
 		basicInfo = basicInfo->children[0]->children[0]->children[0]->children[0];
 		// detection ratio
-		ss << basicInfo->children[2]->children[0]->text << basicInfo->children[2]->children[1]->text << endl;
+        ss << makeJsonKeyValue(basicInfo->children[2]->children[0]->text, basicInfo->children[2]->children[1]->text);
 	}
 
 	return ss.str();
@@ -138,7 +150,7 @@ std::string ResultsAnalyzer::getAnalysisDate()
 	{
 		basicInfo = basicInfo->children[0]->children[0]->children[0]->children[0];
 		// analysis date
-		ss << basicInfo->children[3]->children[0]->text << basicInfo->children[3]->children[1]->text << endl;
+        ss << makeJsonKeyValue(basicInfo->children[3]->children[0]->text, basicInfo->children[3]->children[1]->text);
 	}
 
 	return ss.str();
@@ -148,6 +160,7 @@ std::string ResultsAnalyzer::getFileDetails()
 {
 	auto fileDetails = findElement("id", "file-details");
 	stringstream ss;
+    string result;
 
 	if (fileDetails)
 	{
@@ -172,17 +185,20 @@ std::string ResultsAnalyzer::getFileDetails()
 			auto key = findElement("class", "field-key", c);
 			auto value = findElement("class", "field-value", c);
 			if(key)
-				ss << key->text << ": " << (value ? value->text : c->text) << endl;
+                ss << makeJsonKeyValue(key->text, value ? value->text : c->text);
 		}
-	}
+        result = makeJsonKeyValue("file_details", makeJson(ss.str()), true);
 
-	return ss.str();
+    }
+
+	return result;
 }
 
 std::string ResultsAnalyzer::getMetadata()
 {
 	auto fileDetails = findElement("id", "file-details");
 	stringstream ss;
+    string result;
 
 	if (fileDetails)
 	{
@@ -206,11 +222,14 @@ std::string ResultsAnalyzer::getMetadata()
 		{
 			auto key = findElement("class", "field-key", c);
 			auto value = findElement("class", "field-value", c);
-			ss << key->text << ": " << (value ? value->text : c->text) << endl;
-		}
-	}
+            ss << makeJsonKeyValue(key->text, value ? value->text : c->text);
+        }
 
-	return ss.str();
+        result = makeJsonKeyValue("metadata", makeJson(ss.str()), true);
+
+    }
+
+	return result;
 }
 
 
@@ -225,3 +244,49 @@ void ResultsAnalyzer::analyze()
 	cout << endl;
 	cout << getAntyvirList();
 }
+
+std::string ResultsAnalyzer::getKeyName(const std::string &key)
+{
+	return "\"" + replaceSpaces(trimWhitespaces(key.substr(0, key.find_first_of(":")))) + "\"";
+}
+
+std::string ResultsAnalyzer::getValueName(const std::string &val)
+{
+    return "\"" + trimWhitespaces(val) + "\"";
+}
+
+std::string ResultsAnalyzer::makeJsonKeyValue(const std::string &key, const std::string &val, bool isValueJson)
+{
+    if(isValueJson)
+        return getKeyName(key) + ":" + val;
+
+    return getKeyName(key) + ":" + getValueName(val) + ",";
+}
+
+std::string ResultsAnalyzer::makeJson(const std::string& str)
+{
+    std::string temp = trimWhitespaces(str);
+    if(temp.find_last_of(",") == temp.size()-1)
+        temp.pop_back();
+    return "{" + temp + "}";
+}
+
+string ResultsAnalyzer::makeJsonList(const string& str)
+{
+    string temp = trimWhitespaces(str);
+
+    if(temp.find_last_of(",") == temp.size()-1)
+        temp.pop_back();
+
+    return "[" + temp + "]";
+}
+
+
+
+
+
+
+
+
+
+

@@ -2,11 +2,15 @@
 #define UTILS_H
 #include <string>
 
-// porównywanie stringów bez wzglêdu na wielkoœæ litery
+// porï¿½wnywanie stringï¿½w bez wzglï¿½du na wielkoï¿½ï¿½ litery
 bool compareCaseInsensitive(const std::string& str1, const std::string& str2);
 
-// metoda pomocnicza, s³u¿y do zamienienia wszystkich znaków w stringu na ma³e
+// metoda pomocnicza, sï¿½uï¿½y do zamienienia wszystkich znakï¿½w w stringu na maï¿½e
 std::string makeLowerCase(const std::string& in);
+
+std::string trimWhitespaces(const std::string& str);
+
+std::string replaceSpaces(const std::string& str);
 
 
 
