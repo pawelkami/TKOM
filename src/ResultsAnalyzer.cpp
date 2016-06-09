@@ -41,24 +41,24 @@ std::string ResultsAnalyzer::getBasicInfo()
 	
 	auto basicInfo = findElement("id", "basic-info");
 	stringstream ss;
-    std::string result = "";
+	std::string result = "";
 
 	if (basicInfo)
 	{
 		basicInfo = basicInfo->children[0]->children[0]->children[0]->children[0];
 		// SHA
-        ss << makeJsonKeyValue(basicInfo->children[0]->children[0]->text, basicInfo->children[0]->children[1]->text) << endl;
+		ss << makeJsonKeyValue(basicInfo->children[0]->children[0]->text, basicInfo->children[0]->children[1]->text) << endl;
 
 		// nazwa pliku
-        ss << makeJsonKeyValue(basicInfo->children[1]->children[0]->text, basicInfo->children[1]->children[1]->text) << endl;
+		ss << makeJsonKeyValue(basicInfo->children[1]->children[0]->text, basicInfo->children[1]->children[1]->text) << endl;
 
 		// wspó³czynnik wykrycia
-        ss << makeJsonKeyValue(basicInfo->children[2]->children[0]->text, basicInfo->children[2]->children[1]->text) << endl;
+		ss << makeJsonKeyValue(basicInfo->children[2]->children[0]->text, basicInfo->children[2]->children[1]->text) << endl;
 
 		// data analizy
-        ss << makeJsonKeyValue(basicInfo->children[3]->children[0]->text, basicInfo->children[3]->children[1]->text) << endl;
+		ss << makeJsonKeyValue(basicInfo->children[3]->children[0]->text, basicInfo->children[3]->children[1]->text) << endl;
 
-        result = makeJsonKeyValue("basic_info", makeJson(ss.str()), true);
+		result = makeJsonKeyValue("basic_info", makeJson(ss.str()), true);
 	}
 
 	return result;
@@ -70,24 +70,24 @@ std::string ResultsAnalyzer::getAntyvirList()
 {
 	auto results = findElement("id", "antivirus-results");
 	stringstream ss;
-    string result = "";
+	string result = "";
 	if (results)
-    {
+	{
 		for (auto& c : results->children[1]->children)
 		{
 			if (c->children[1]->attributes[0].value.find("green") != std::string::npos)
-            {
-                ss << makeJson(makeJsonKeyValue("antivirus", c->children[0]->text) + makeJsonKeyValue("detection", "File not detected")
+			{
+				ss << makeJson(makeJsonKeyValue("antivirus", c->children[0]->text) + makeJsonKeyValue("detection", "File not detected")
                                + makeJsonKeyValue("date",c->children[2]->text)) << "," <<  endl;
-            }
+			}
 			else
-            {
-                ss << makeJson(makeJsonKeyValue("antivirus", c->children[0]->text) + makeJsonKeyValue("detection", c->children[1]->text)
+			{
+				ss << makeJson(makeJsonKeyValue("antivirus", c->children[0]->text) + makeJsonKeyValue("detection", c->children[1]->text)
                                + makeJsonKeyValue("date",c->children[2]->text)) << "," << endl;
-            }
+			}
 
 		}
-        result = makeJsonKeyValue("antivir_list", makeJsonList(ss.str()), true);
+		result = makeJsonKeyValue("antivir_list", makeJsonList(ss.str()), true);
 	}
 
 	return result;
@@ -102,8 +102,8 @@ std::string ResultsAnalyzer::getSHA()
 	{
 		basicInfo = basicInfo->children[0]->children[0]->children[0]->children[0];
 		// SHA
-        ss << makeJsonKeyValue(basicInfo->children[0]->children[0]->text, basicInfo->children[0]->children[1]->text);
-    }
+		ss << makeJsonKeyValue(basicInfo->children[0]->children[0]->text, basicInfo->children[0]->children[1]->text);
+	}
 
 	return ss.str();
 }
@@ -160,7 +160,7 @@ std::string ResultsAnalyzer::getFileDetails()
 {
 	auto fileDetails = findElement("id", "file-details");
 	stringstream ss;
-    string result;
+	string result;
 
 	if (fileDetails)
 	{
@@ -198,7 +198,7 @@ std::string ResultsAnalyzer::getMetadata()
 {
 	auto fileDetails = findElement("id", "file-details");
 	stringstream ss;
-    string result;
+	string result;
 
 	if (fileDetails)
 	{
@@ -268,7 +268,7 @@ std::string ResultsAnalyzer::makeJson(const std::string& str)
     std::string temp = trimWhitespaces(str);
     if(temp.find_last_of(",") == temp.size()-1)
         temp.pop_back();
-    return "{" + temp + "}";
+    return "{\n" + temp + "\n}";
 }
 
 string ResultsAnalyzer::makeJsonList(const string& str)
@@ -278,8 +278,9 @@ string ResultsAnalyzer::makeJsonList(const string& str)
     if(temp.find_last_of(",") == temp.size()-1)
         temp.pop_back();
 
-    return "[" + temp + "]";
+    return "[\n" + temp + "\n]";
 }
+
 
 
 
