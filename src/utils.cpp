@@ -1,8 +1,8 @@
 #include "utils.h"
 #include <vector>
-#include <string>
 #include <iterator>
 #include <algorithm>
+#include <locale>
 
 bool compareCaseInsensitive(const std::string& str1, const std::string& str2)
 {
@@ -37,7 +37,7 @@ std::string trimWhitespaces(const std::string& str)
     unsigned long endIndex = str.size()-1;
     for(; endIndex > beginIndex; --endIndex)
     {
-        if(!isspace(str[endIndex],loc))
+        if(!isspace(str[endIndex], loc))
             break;
     }
 

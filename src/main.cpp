@@ -39,11 +39,12 @@ int main(int argc, char** argv)
 		parser.parse();
 
 		ResultsAnalyzer analyzer(parser.getRoot());
+		cout << "{" << endl;
 		cout << analyzer.getBasicInfo() << endl;
 		cout << analyzer.getFileDetails() << endl;
 		cout << analyzer.getMetadata() << endl;
 		cout << analyzer.getAntyvirList() << endl;
-
+		cout << "}";
 	}
 	catch (const runtime_error& e)
 	{
